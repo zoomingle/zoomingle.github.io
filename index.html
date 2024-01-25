@@ -4,59 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZooMingle - Social Network for Pets</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        .container {
-            width: 80%;
-            margin: 0 auto;
-        }
-
-        header {
-            background: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 1em 0;
-        }
-
-        .post {
-            border: 1px solid #ddd;
-            margin-top: 15px;
-            padding: 10px;
-        }
-    </style>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <header>
+    <header class="bg-primary text-white text-center py-4">
         <h1>Welcome to ZooMingle!</h1>
     </header>
 
-    <div class="container">
-        <h2>Create a Post</h2>
-        <textarea id="postContent" rows="4" cols="50"></textarea><br>
-        <button onclick="createPost()">Post</button>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Create Your Pet's Profile</h2>
+                <input type="text" id="petName" class="form-control mb-2" placeholder="Pet's Name">
+                <input type="text" id="petSpecies" class="form-control mb-2" placeholder="Species">
+                <textarea id="petBio" class="form-control mb-2" rows="3" placeholder="Short Bio"></textarea>
+                <button onclick="createProfile()" class="btn btn-success">Create Profile</button>
 
-        <h2>Timeline</h2>
-        <div id="posts"></div>
+                <h2 class="mt-4">Your Pet's Profile</h2>
+                <div id="profile" class="p-3 border"></div>
+            </div>
+            <div class="col-md-6">
+                <h2>Create a Post</h2>
+                <textarea id="postContent" class="form-control mb-2" rows="4"></textarea>
+                <button onclick="createPost()" class="btn btn-primary">Post</button>
+
+                <h2 class="mt-4">Timeline</h2>
+                <div id="posts"></div>
+            </div>
+        </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script>
+        function createProfile() {
+            var name = document.getElementById('petName').value;
+            var species = document.getElementById('petSpecies').value;
+            var bio = document.getElementById('petBio').value;
+            if (name && species && bio) {
+                var profileDiv = document.getElementById('profile');
+                profileDiv.innerHTML = '<h3>' + name + ' (' + species + ')</h3><p>' + bio + '</p>';
+                profileDiv.className = 'profile p-3 border bg-light';
+                document.getElementById('petName').value = '';
+                document.getElementById('petSpecies').value = '';
+                document.getElementById('petBio').value = '';
+            }
+        }
+
         function createPost() {
             var postContent = document.getElementById('postContent').value;
             if (postContent) {
                 var postDiv = document.createElement('div');
-                postDiv.className = 'post';
+                postDiv.className = 'post border p-3 mb-3 bg-light';
                 postDiv.textContent = postContent;
-
                 var postsDiv = document.getElementById('posts');
                 postsDiv.insertBefore(postDiv, postsDiv.firstChild);
-
-                document.getElementById('postContent').value = ''; // Clear the textarea
+                document.getElementById('postContent').value = '';
             }
         }
     </script>
