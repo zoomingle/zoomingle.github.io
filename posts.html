@@ -7,17 +7,25 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <header class="bg-success text-white text-center py-4">
-        <h1>Welcome to ZooMingle - Posts</h1>
+    <header class="bg-success text-white text-center py-3">
+        <h2>Welcome to ZooMingle - Posts</h2>
     </header>
 
     <div class="container mt-5">
         <div class="row">
+
             <div class="col-md-4">
                 <h2>Your Pet's Profile</h2>
                 <div id="profile" class="p-3 border bg-light"></div>
+                <h3 class="mt-4">Friends</h3>
+                <ul id="fakeFriendsList" class="list-group">
+                    <!-- Fake friends list will be populated here -->
+                </ul>
+                <button onclick="sendMessage()" class="btn btn-warning mt-3">Send Message</button>
             </div>
+
             <div class="col-md-8">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/OHcAOlamgDc?si=UBX79o-wXtlPZ1PC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> 
                 <h2>Create a Post</h2>
                 <textarea id="postContent" class="form-control mb-2" rows="4"></textarea>
                 <button onclick="createPost()" class="btn btn-primary">Post</button>
@@ -29,6 +37,12 @@
     </div>
 
     <script>
+        var fakeFriends = [
+            { name: "Buddy", species: "Dog" },
+            { name: "Mittens", species: "Cat" },
+            { name: "Goldie", species: "Fish" },
+            { name: "Tweety", species: "Bird" }
+        ];
 
         function createPost() {
             var postContent = document.getElementById('postContent').value;
@@ -49,6 +63,7 @@
                 postDiv.appendChild(document.createElement('br'));
                 postDiv.appendChild(document.createTextNode(postContent));
 
+
                 var postsDiv = document.getElementById('posts');
                 postsDiv.insertBefore(postDiv, postsDiv.firstChild);
                 document.getElementById('postContent').value = '';
@@ -64,12 +79,42 @@
                 if (profileData.imageUrl) {
                     profileHtml += '<img src="' + profileData.imageUrl + '" width=170px>';
                 }
-                var profileDiv = document.getElementById('profile');
+                profileHtml += '<hr><h5>' + profileData.availability + '</h5>';
+                profileHtml += '<h5>' + profileData.callUrl + '</h5>';
                 profileDiv.innerHTML = profileHtml;
                 profileDiv.className = 'profile p-3 border bg-light';
             }
         }
+
+        function populateFakeFriends() {
+            var fakeFriendsList = document.getElementById('fakeFriendsList');
+            fakeFriends.forEach(friend => {
+                var listItem = document.createElement('li');
+                listItem.className = 'list-group-item';
+                listItem.textContent = friend.name + ' (' + friend.species + ')';
+                listItem.onclick = function() {
+                    this.classList.toggle('list-group-item-success');
+                };
+                fakeFriendsList.appendChild(listItem);
+            });
+        }
+
+        function sendMessage() {
+            var selectedFriends = document.querySelectorAll('#fakeFriendsList .list-group-item-success');
+            selectedFriends.forEach(friend => {
+                console.log('Message sent to: ' + friend.textContent);
+            });
+
+            if (selectedFriends.length > 0) {
+                alert('Message sent!');
+            } else {
+                alert('Please select friends to message.');
+            }
+        }
+
+
         loadProfile()
+        populateFakeFriends();
     </script>
 </body>
 </html>
