@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts - Animal Social Network</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="script.js" defer></script>
+    <style>
+        #posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .post-image {
+            width: 100px;  /* Or any other size */
+            height: 100px;
+            margin-right: 10px;
+        }
+
+        .post {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: white;
+        }
+
+        body {
+            background-image: url('animal-social-network-background.jpg');
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+            background-position: center center; 
+        }
+    </style>
+
+    </style>
+</head>
+<body>
+    <header class="bg-success text-white text-center py-3">
+        <h1>Pet's Posts - ZooMingle</h1>
+    </header>
+    <main>
+        <section id="posts">
+        </section>
+    </main>
+    <footer>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPosts();
+        });
+
+        function loadPosts() {
+            const posts = [
+                { author: "Pari", content: "Pari talks about life!", imageUrl: "https://upload.wikimedia.org/wikipedia/commons/8/84/Parrot%28l%29.jpg" },
+                { author: "Bob", content: "Max won a prize at the pet show!", imageUrl: "https://scholarlycommons.pacific.edu/kam-photos/4266/preview.jpg" },
+            ];
+
+            const postsContainer = document.getElementById('posts');
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+
+                const imageElement = document.createElement('img');
+                imageElement.src = post.imageUrl;
+                imageElement.alt = post.author + "'s pet";
+                imageElement.classList.add('post-image');
+
+                const textElement = document.createElement('div');
+                textElement.innerHTML = `<h3>${post.author}</h3><p>${post.content}</p>`;
+
+                postElement.appendChild(imageElement);
+                postElement.appendChild(textElement);
+                postsContainer.appendChild(postElement);
+            });
+        }
+
+
+    </script>
+</body>
+</html>
